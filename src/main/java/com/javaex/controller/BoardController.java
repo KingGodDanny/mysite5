@@ -1,14 +1,20 @@
 package com.javaex.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.BoardService;
 import com.javaex.vo.BoardVo;
+import com.javaex.vo.UserVo;
 
 @Controller
 public class BoardController {
@@ -16,6 +22,8 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
+	
+	//하나의 게시글 읽기
 	@RequestMapping(value = "/board/read", method = {RequestMethod.GET, RequestMethod.POST})
 	public String read(Model model, @RequestParam("no") int no) {
 		System.out.println("BoardController.read()");
@@ -34,4 +42,60 @@ public class BoardController {
 		return "board/read";
 	}
 	
+	
+	//전체리스트
+	@RequestMapping(value = "/board/list", method = {RequestMethod.GET, RequestMethod.POST})
+	public String list(Model model, @RequestParam(value="keyword", required = false, defaultValue = "") String keyword) {
+		System.out.println("BoardController.list()");
+		System.out.println(keyword);
+		
+		//1. 사용자가 요청한 list 목록을 서비스로 토스해준다
+		 List<BoardVo> boardList = boardService.getList(keyword);
+		    
+		//6. jsp로 보내기위해서 리턴해서 넘어온 boardList를 어트리뷰트에 담아줘야한다
+		 model.addAttribute("bList", boardList);
+		
+		return "board/list";
+	}
+	
+	
+	// 글쓰기 폼
+	@RequestMapping(value = "/board/writeForm", method = { RequestMethod.GET, RequestMethod.POST })
+	public String wirteForm() {
+		System.out.println("BoardController.writeForm()");
+
+		return "board/writeForm";
+	}
+	
+   
+	// 글쓰기
+	@RequestMapping(value = "/board/write", method = { RequestMethod.GET, RequestMethod.POST })
+	public String write(@ModelAttribute BoardVo boardVo, HttpSession session) {
+		System.out.println("BoardController.write()");
+
+		// 1. 로그인한 사용자 구간에서 글쓰기폼을 통해 넘어온 정보들 담아서
+		// 서비스구간으로 토스해준다.
+		int no = ((UserVo) session.getAttribute("authUser")).getNo();
+
+		// 로그인한 사용자의 no를 userNo에 넣어준다.
+		boardVo.setUserNo(no);
+
+		boardService.write(boardVo);
+
+		return "redirect:/board/list";
+	}
+   
+   
+	// 삭제
+	@RequestMapping(value = "/board/delete", method = { RequestMethod.GET, RequestMethod.POST })
+	public String delete(@RequestParam("no") int no) {
+		System.out.println("BoardController.delete()");
+
+		//1. no파라미터 서비스로 토스!
+		boardService.delete(no);
+
+		
+		return "redirect:/board/list";
+	}
+   
 }

@@ -30,4 +30,50 @@
 		]]>
 	</select>
 
+
+	<!-- BoardList 가져오기 -->
+	<select id="boardList" parameterType="String" resultType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			select bo.no,
+				   bo.title,
+				   us.name,
+				   bo.hit,
+				   bo.reg_date as regDate,
+				   bo.user_no as userNo
+			from users us, board bo
+			where us.no = bo.user_no
+		]]>
+			<if test=" value != null and value !='' "> <!--oracle은 % || #{value} || %도 가능함(?) -->
+				and us.name || bo.title like '%' || #{keyword} || '%'
+			</if>
+		<![CDATA[
+			order by bo.reg_date desc
+		]]>
+	</select>
+
+
+	<!-- 게시판 글쓰기 -->
+	<insert id="boardWrite" parameterType="com.javaex.vo.BoardVo">
+      <![CDATA[
+         insert into board
+         values ( seq_board_no.nextval
+               ,#{title}
+               ,#{content}
+               ,0
+               ,sysdate
+               ,#{userNo}
+               )      
+      ]]>
+	</insert>
+
+
+	<!-- 게시판 글삭제 -->
+	<delete id="boardDelete" parameterType="int">
+      <![CDATA[
+         delete from board
+         where no = #{no}
+      ]]>
+	</delete>
+	
+	
 </mapper>

@@ -73,7 +73,7 @@
 							</div>
 							
 							<a id="btn_modify" href="">수정</a>
-							<a id="btn_modify" href="">목록</a>
+							<a id="btn_modify" href="${pageContext.request.contextPath }/board/list">목록</a>
 							
 						</form>
 						<!-- //form -->
