@@ -19,14 +19,14 @@
 			<c:if test="${not empty sessionScope.authUser }">
 				<ul>
 					<li>${sessionScope.authUser.name } 님 안녕하세요^^</li>
-					<li><a href="" class="btn_s">로그아웃</a></li>
-					<li><a href="" class="btn_s">회원정보수정</a></li>
+					<li><a href="${pageContext.request.contextPath }/user/logout" class="btn_s">로그아웃</a></li>
+					<li><a href="${pageContext.request.contextPath }/user/modifyForm" class="btn_s">회원정보수정</a></li>
 				</ul>
 			</c:if>
 				
 			<c:if test="${empty sessionScope.authUser }">	
 				<ul>
-					<li><a href="" class="btn_s">로그인</a></li>
+					<li><a href="${pageContext.request.contextPath }/user/loginForm" class="btn_s">로그인</a></li>
 					<li><a href="${pageContext.request.contextPath }/user/joinForm" class="btn_s">회원가입</a></li>
 				</ul>
 			</c:if>

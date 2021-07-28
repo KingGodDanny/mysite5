@@ -34,4 +34,32 @@ public class UserService {
 		return count;
 	}
 	
+	
+	//회원정보수정폼
+	public UserVo getUser(int no) {
+		System.out.println("[UserService.modifyGetUser()]");
+		System.out.println(no);
+		
+		// 3.컨트롤러에서 넘어온 userVo(no)값을 다오구간으로 토스!
+		UserVo userVo = userDao.userInfo(no);
+		
+		
+		// 6.다오에서 리턴해준 userVo 확인후 리턴해준다!
+		System.out.println("서비스구간: " + userVo);
+		
+		return userVo;
+	}
+	
+	
+	//회원정보 수정
+	public int userModify(UserVo userVo) {
+		System.out.println("[UserService.modify()]");
+		
+		//2. 컨트롤러에서 넘어온 userVo 값 다오구간으로 토스!
+		int count = userDao.modify(userVo);
+		
+		
+		//5. 다오에서 리턴해온 count 또 리턴!
+		return count;
+	}
 }
