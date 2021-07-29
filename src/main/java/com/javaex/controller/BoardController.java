@@ -61,8 +61,17 @@ public class BoardController {
 	
 	// 글쓰기 폼
 	@RequestMapping(value = "/board/writeForm", method = { RequestMethod.GET, RequestMethod.POST })
-	public String wirteForm() {
+	public String wirteForm(HttpSession session) {
 		System.out.println("BoardController.writeForm()");
+
+		// 세션(로그인한 사용자)의 번호
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		
+		// 로그인 안한경우 --> 메인으로 보낸다
+		if (authUser == null) {
+			System.out.println("로그인 안한 경우");
+			return "redirect:/user/loginForm";
+		}
 
 		return "board/writeForm";
 	}
@@ -101,22 +110,52 @@ public class BoardController {
 	
 	//수정폼
 	@RequestMapping(value = "/board/modifyForm", method = { RequestMethod.GET, RequestMethod.POST})
-	public String modifyForm(Model model, @RequestParam("no") int no) {
+	public String modifyForm(Model model, @RequestParam("no") int no, HttpSession session) {
 		System.out.println("BoardController.modifyForm()");
 		
+
 		//1. no 값 서비스로 토스!
 		BoardVo boardVo = boardService.boardModify(no);
+		
+		//세션(로그인한 사용자)의 번호
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
 	
+		//로그인 안한경우  --> 메인으로 보낸다
+		if(authUser == null) {
+			System.out.println("로그인 안한 경우");
+			return "redirect:/main";
+		}
+		
+		if(authUser.getNo() == boardVo.getUserNo()) { // 로그인사용자 == 글작성자
+			System.out.println("자신의 글인 경우 수정폼으로 포워드");
+			//서비스구간에서 넘어온 한사람 정보 모델어트리뷰트에 저장
+			model.addAttribute("boardVo", boardVo);
+			return "board/modifyForm";
+		} else {
+			System.out.println("다른사람 글인 경우");
+			return "redirect:/board/list";
+		}
 		
 		
-		//서비스구간에서 넘어온 한사람 정보 모델어트리뷰트에 저장
-		model.addAttribute("boardVo", boardVo);
+//		//현재글의 작성자(번호)
+//		int userNo = boardVo.getUserNo();
+//		
+//		int loginNo = authUser.getNo();
+//		
+//		if(userNo == loginNo) {
+//			
+			
+//			return "board/modifyForm";
+//			
+//		} else {
+//			return "redirect:/board/list";
+//		}
 		
-		return "board/modifyForm";
 	}
 	
 	
-	//수정
+	//글수정
 	@RequestMapping(value = "/board/modify", method = { RequestMethod.GET, RequestMethod.POST })
 	public String modify(@ModelAttribute BoardVo boardVo) {
 		System.out.println("BoardController.modify()");

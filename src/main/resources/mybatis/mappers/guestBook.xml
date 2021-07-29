@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="guestBook">
+
+	<!-- 방명록 가져오기 -->
+	<select id="guestList" resultType="com.javaex.vo.GuestBookVo">
+		<![CDATA[
+			select guestbook_id as no,
+				   name,
+				   password,
+				   content,
+				   reg_date as regDate
+			from guestbook
+			order by guestbook_id asc
+		]]>
+		
+	</select>
+	
+	
+</mapper>
