@@ -74,4 +74,27 @@ public class BoardService {
 	}
 	
 	
+	//수정폼을 위한 게시물1개 가져오기
+	public BoardVo boardModify(int no) {
+		System.out.println("BoardService.boardModify()");
+		
+		//2. 컨트롤러에서 넘어온 no 다오로 토스!
+		//이미 한명읽기정보를 위한 메소드가 다오와 xml에 있기때문에
+		//같이 사용하자
+		BoardVo boardVo = boardDao.selectBoard(no);
+		
+		return boardVo;
+	}
+	
+	
+	//게시물 수정
+	public int modify(BoardVo boardVo) {
+		System.out.println("BoardService.modify()");
+
+		//2. 컨트롤러에서 넘어온 boardVo 토스
+		int count = boardDao.boardModify(boardVo);
+		
+		//5.확인후 리턴!
+		return count;
+	}
 }

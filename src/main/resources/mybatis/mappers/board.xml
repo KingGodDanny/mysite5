@@ -76,4 +76,13 @@
 	</delete>
 	
 	
+	<!-- 게시물 수정 -->
+	<update id="boardModify" parameterType="com.javaex.vo.BoardVo">
+		<![CDATA[
+			UPDATE board
+			SET title = #{title},
+				content = #{content}
+				where no = #{no}
+		]]>
+	</update>
 </mapper>

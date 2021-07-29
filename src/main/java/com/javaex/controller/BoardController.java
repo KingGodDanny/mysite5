@@ -98,4 +98,33 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
    
+	
+	//수정폼
+	@RequestMapping(value = "/board/modifyForm", method = { RequestMethod.GET, RequestMethod.POST})
+	public String modifyForm(Model model, @RequestParam("no") int no) {
+		System.out.println("BoardController.modifyForm()");
+		
+		//1. no 값 서비스로 토스!
+		BoardVo boardVo = boardService.boardModify(no);
+	
+		
+		
+		//서비스구간에서 넘어온 한사람 정보 모델어트리뷰트에 저장
+		model.addAttribute("boardVo", boardVo);
+		
+		return "board/modifyForm";
+	}
+	
+	
+	//수정
+	@RequestMapping(value = "/board/modify", method = { RequestMethod.GET, RequestMethod.POST })
+	public String modify(@ModelAttribute BoardVo boardVo) {
+		System.out.println("BoardController.modify()");
+
+		//1. 세가지의 파라미터 서비스로 토스!
+		boardService.modify(boardVo);
+		
+		return "redirect:/board/list";
+	}
+	
 }

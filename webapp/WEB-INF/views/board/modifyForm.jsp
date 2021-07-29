@@ -15,13 +15,19 @@
 <body>
 	<div id="wrap">
 
-		<!-- header(로고 로그인버튼)   nav(메인 상단메뉴) -->
+		<!-- //header -->
 		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+		
 
 		<div id="container" class="clearfix">
-		
-		<!-- 게시판 aside -->
-		<c:import url="/WEB-INF/views/includes/asideBoard.jsp"></c:import>
+			<div id="aside">
+				<h2>게시판</h2>
+				<ul>
+					<li><a href="/${pageContext.request.contextPath }/board/list">일반게시판</a></li>
+					<li><a href="">댓글게시판</a></li>
+				</ul>
+			</div>
+			<!-- //aside -->
 
 			<div id="content">
 
@@ -39,49 +45,48 @@
 				<!-- //content-head -->
 	
 				<div id="board">
-					<div id="read">
-						<form action="#" method="get">
+					<div id="modifyForm">
+						<form action="${pageContext.request.contextPath }/board/modify" method="get">
+							<input type=hidden name="no" value="${boardVo.no }">
+							
 							<!-- 작성자 -->
 							<div class="form-group">
 								<span class="form-text">작성자</span>
-								<span class="form-value">${requestScope.boardVo.name }</span>
+								<span class="form-value">${boardVo.name }</span>
 							</div>
 							
 							<!-- 조회수 -->
 							<div class="form-group">
 								<span class="form-text">조회수</span>
-								<span class="form-value">${requestScope.boardVo.hit }</span>
+								<span class="form-value">${boardVo.hit}</span>
 							</div>
 							
 							<!-- 작성일 -->
 							<div class="form-group">
 								<span class="form-text">작성일</span>
-								<span class="form-value">${requestScope.boardVo.regDate }</span>
+								<span class="form-value">${boardVo.regDate }</span>
 							</div>
 							
 							<!-- 제목 -->
 							<div class="form-group">
-								<span class="form-text">제 목</span>
-								<span class="form-value">${requestScope.boardVo.title }</span>
+								<label class="form-text" for="txt-title">제목</label>
+								<input type="text" id="txt-title" name="title" value="${boardVo.title }">
 							</div>
 						
+							
+						
 							<!-- 내용 -->
-							<div id="txt-content">
-								<span class="form-value" >
-									${requestScope.boardVo.content }
-								</span>
+							<div class="form-group">
+								<textarea id="txt-content" name="content">${read.content }</textarea>
 							</div>
-
-							<c:if test="${authUser.no eq boardVo.userNo }">
-								<a id="btn_modify" href="${pageContext.request.contextPath }/board/modifyForm?no=${boardVo.no }">수정</a>
-							</c:if>
-
-							<a id="btn_modify" href="${pageContext.request.contextPath }/board/list">목록</a>
+							
+							<a id="btn_cancel" href="${pageContext.request.contextPath }/board/list">취소</a>
+							<button id="btn_modify" type="submit" >수정</button>
 							
 						</form>
 						<!-- //form -->
 					</div>
-					<!-- //read -->
+					<!-- //modifyForm -->
 				</div>
 				<!-- //board -->
 			</div>
@@ -90,13 +95,12 @@
 		</div>
 		<!-- //container  -->
 
-		<!-- 푸터 -->
+
+		<!-- //footer -->
 		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-		
 		
 	</div>
 	<!-- //wrap -->
-
+	
 </body>
-
 </html>

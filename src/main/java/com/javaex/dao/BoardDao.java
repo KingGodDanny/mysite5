@@ -86,4 +86,19 @@ public class BoardDao {
 		//4. boardDelete 정보 count로 리턴
 		return count;
 	   }
+	
+	
+	//게시물 수정하기
+	public int boardModify(BoardVo boardVo) {
+		System.out.println("BoardDao.boardModify()");
+
+		//3. sql세션 요청후 xml 전달
+		int count = sqlSession.update("board.boardModify" , boardVo);
+		
+		System.out.println(boardVo);
+		
+		//4. 위에 넘어오는거 확인후 리턴!
+		return count;
+	}
+	
 }
