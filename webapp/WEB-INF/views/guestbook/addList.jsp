@@ -1,27 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
-<%-- <%@page import="com.javaex.vo.UserVo" %> --%>
-<%-- <%@page import="com.javaex.dao.GuestBookDao" %> --%>
-<%-- <%@page import="com.javaex.vo.GuestBookVo" %> --%>
-<%-- <%@page import="java.util.List" %> --%>
-
-	
-<%
-	//로그인관련
-//	UserVo authUser = (UserVo)session.getAttribute("authUser");
-
-
-	//리스트 출력관련
-//	List<GuestBookVo> guestList = //(List<GuestBookVo>)request.getAttribute("gList");
-	
-	//이렇게 쓰는것은 모델1유형으로 쓰는것과 다름이없다(?)
-// 	GuestBookDao guestBookDao = new GuestBookDao(); //게스트리스트를 불러오기위한 공간열기
-// 	List<GuestBookVo> guestList = guestBookDao.getGuestList(); //게스트리스트를 배열에 담기
-
-%>    
 
 
 <!DOCTYPE html>
@@ -66,7 +45,7 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
-					<form action="${pageContext.request.contextPath }/guest/add" method="get">
+					<form action="${pageContext.request.contextPath }/guestbook/add" method="get">
 						<table id="guestAdd">
 							<colgroup>
 								<col style="width: 70px;">
@@ -107,7 +86,7 @@
 							<td>${gBookVo.no }  </td>
 							<td>${gBookVo.name } </td>
 							<td>${gBookVo.regdate } </td>
-							<td><a href="${pageContext.request.contextPath }/guest/deleteForm?no=${gBookVo.no }  ">삭제</a></td>
+							<td><a href="${pageContext.request.contextPath }/guestbook/deleteForm?no=${gBookVo.no } ">삭제</a></td>
 						</tr>
 						<tr>
 							<td colspan=4 class="text-left">방명록 내용<br>${gBookVo.content }  </td>
