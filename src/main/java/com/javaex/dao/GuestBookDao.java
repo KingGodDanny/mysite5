@@ -22,9 +22,26 @@ public class GuestBookDao {
 		//3. 세션통해 xml까지
 		List<GuestBookVo> guestList = sqlSession.selectList("guestBook.guestList");
 		
-		System.out.println("게북다오구간: " + guestList);
 		System.out.println(guestList);
 		
 		return guestList;
 	}
+	
+	
+	//방명록 등록
+	public int guestInsert(GuestBookVo guestBookVo) {
+		System.out.println("GuestBookDao.guestInsert");
+		
+		//3. spl > xml
+		int count = sqlSession.insert("guestBook.guestInsert", guestBookVo);
+		
+		System.out.println("다오구간등록: " + guestBookVo);
+		
+		//4.리턴
+		return count;
+	}
+	
+	
+	//삭제폼
+	
 }

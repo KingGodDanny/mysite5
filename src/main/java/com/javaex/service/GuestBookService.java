@@ -15,7 +15,7 @@ public class GuestBookService {
 	private GuestBookDao guestBookDao;
 	
 	
-	////방명록 & 등록폼 가져오기
+	//방명록 & 등록폼 가져오기
 	public List<GuestBookVo> getGuestList() {
 		System.out.println("GuestBookService.List<GuestBookVo>");
 		
@@ -24,4 +24,17 @@ public class GuestBookService {
 		
 		return guestList;
 	}
+
+	
+	//방명록 등록
+	public int guestAdd(GuestBookVo guestBookVo) {
+		System.out.println("GuestBookService.add()");
+				
+		//2. 다오로 토스
+		int count = guestBookDao.guestInsert(guestBookVo);
+				
+		//5.리턴
+		return count;
+	}
+	
 }

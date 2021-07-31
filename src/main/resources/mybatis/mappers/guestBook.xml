@@ -18,4 +18,17 @@
 	</select>
 	
 	
+	<!-- 방명록 등록 -->
+	<insert id="guestInsert" parameterType="com.javaex.vo.GuestBookVo">
+		<![CDATA[
+			INSERT INTO guestbook
+			VALUES(seq_guestbook_id.nextval,
+			 #{name}, 
+			 #{password}, 
+			 #{content}, 
+			 sysdate)
+		]]>
+	</insert>
+	
+	
 </mapper>
