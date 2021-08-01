@@ -31,4 +31,13 @@
 	</insert>
 	
 	
+	<!-- 방명록 삭제 -->
+	<delete id="delete" parameterType="com.javaex.vo.GuestBookVo">
+		<![CDATA[
+			DELETE FROM guestbook
+			WHERE guestbook_id = #{no}
+			and password = #{password}
+		]]>	
+	</delete>
+	
 </mapper>

@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.javaex.service.GuestBookService;
 import com.javaex.vo.GuestBookVo;
@@ -49,10 +48,29 @@ public class GuestbookController {
 	
 	//삭제폼
 	@RequestMapping(value = "guestbook/deleteForm", method = {RequestMethod.GET, RequestMethod.POST})
-	public String deleteForm(Model model, @RequestParam("no") int no) {
-		
-		model.addAttribute("no", no);
+	public String deleteForm() {
 		
 		return "guestbook/deleteForm";
+	}
+	
+	
+	//삭제
+	@RequestMapping(value = "guestbook/delete", method = {RequestMethod.GET, RequestMethod.POST})
+	public String delete(@ModelAttribute GuestBookVo guestBookVo) {
+		System.out.println("gBookController.delete()");
+		
+		//1. 서비스토스
+		int count = guestBookService.guestDelete(guestBookVo);
+		
+		
+		if(count == 1) {
+			return "redirect:/guestbook/addList";
+		} else {
+			System.out.println("삭제실패");
+			return "redirect:/guestbook/addList";
+			//return "redirect:/guestbook/deleteForm?resutl=fail";
+		}
+		
+		
 	}
 }

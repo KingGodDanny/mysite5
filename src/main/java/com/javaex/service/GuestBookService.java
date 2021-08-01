@@ -37,4 +37,15 @@ public class GuestBookService {
 		return count;
 	}
 	
+	
+	//삭제
+	public int guestDelete(GuestBookVo guestBookVo) {
+		System.out.println("GuestBookService.guestDelete()");
+		
+		//2.다오 토스
+		int count = guestBookDao.delete(guestBookVo);
+		
+		return count;
+	}
+	
 }

@@ -61,6 +61,14 @@
 								<td><a href="${pageContext.request.contextPath }/main">[메인으로 돌아가기]</a></td>
 							</tr>
 						</table>
+						
+						
+						<c:if test="${param.result == 'fail' }">
+							<p>
+							<br>
+								<strong>비밀번호가 일치하지 않습니다.</strong>
+							</p>
+						</c:if>
 						<input type='hidden' name="no" value= ${param.no }>
 						
 					</form>

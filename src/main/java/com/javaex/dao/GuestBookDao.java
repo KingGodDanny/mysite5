@@ -42,6 +42,15 @@ public class GuestBookDao {
 	}
 	
 	
-	//삭제폼
-	
+	//삭제
+	public int delete(GuestBookVo guestBookVo) {
+		System.out.println("GuestBookDao.delete");
+		
+		//3. sql > xml
+		int count = sqlSession.delete("guestBook.delete", guestBookVo);
+		System.out.println("다오구간 :" + guestBookVo);
+		
+		
+		return count;
+	}
 }
