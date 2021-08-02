@@ -67,8 +67,8 @@ public class GuestbookController {
 			return "redirect:/guestbook/addList";
 		} else {
 			System.out.println("삭제실패");
-			return "redirect:/guestbook/addList";
-			//return "redirect:/guestbook/deleteForm?resutl=fail";
+			//return "redirect:/guestbook/addList";
+			return "redirect:/guestbook/deleteForm?result=fail&no=" + guestBookVo.getNo();
 		}
 		
 		

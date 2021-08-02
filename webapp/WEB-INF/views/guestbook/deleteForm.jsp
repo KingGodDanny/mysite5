@@ -46,6 +46,8 @@
 				<!-- //content-head -->
 
 				<div id="guestbook">
+				
+						
 					<form action="${pageContext.request.contextPath }/guestbook/delete" method="get">
 						<table id="guestDelete">
 							<colgroup>
@@ -62,13 +64,13 @@
 							</tr>
 						</table>
 						
-						
 						<c:if test="${param.result == 'fail' }">
 							<p>
 							<br>
 								<strong>비밀번호가 일치하지 않습니다.</strong>
 							</p>
 						</c:if>
+						
 						<input type='hidden' name="no" value= ${param.no }>
 						
 					</form>
