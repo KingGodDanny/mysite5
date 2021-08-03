@@ -71,6 +71,15 @@ public class GuestbookController {
 			return "redirect:/guestbook/deleteForm?result=fail&no=" + guestBookVo.getNo();
 		}
 		
+	}
+	
+	
+	// ajax 방명록 메인페이지
+	@RequestMapping(value = "guestbook/ajaxMain", method = {RequestMethod.GET, RequestMethod.POST})
+	public String ajaxMain() {
+		System.out.println("gBookController.ajaxMain()");
 		
+		
+		return "guestbook/ajaxList";
 	}
 }

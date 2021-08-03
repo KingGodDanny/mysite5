@@ -12,7 +12,7 @@
 				   content,
 				   reg_date as regDate
 			from guestbook
-			order by guestbook_id asc
+			order by guestbook_id desc
 		]]>
 		
 	</select>
@@ -39,5 +39,39 @@
 			and password = #{password}
 		]]>	
 	</delete>
+	
+	
+	<!-- 	방명록 글 저장(키값 저장) ajax  -->
+	<insert id="insertGuestbookKey" parameterType="com.javaex.vo.GuestBookVo">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+			<![CDATA[
+				select seq_guestbook_id.nextval from dual
+			]]>
+		</selectKey>
+			
+		<![CDATA[
+			INSERT INTO guestbook
+			VALUES(#{no},
+			 	   #{name}, 
+			 	   #{password}, 
+			 	   #{content}, 
+			 	   sysdate)			
+		]]>
+	</insert>
+	
+	
+	<!-- 방명록 글 1개 가져오기 ajax -->
+	<select id="selectGuestbook" parameterType="int" resultType="com.javaex.vo.GuestBookVo">
+		<![CDATA[
+			select guestbook_id as no,
+				   name,
+				   password,
+				   content,
+				   reg_date as regdate
+			from guestbook
+			where guestbook_id = #{no}
+		]]>
+	</select>
+	
 	
 </mapper>

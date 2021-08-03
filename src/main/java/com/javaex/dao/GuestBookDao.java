@@ -22,7 +22,7 @@ public class GuestBookDao {
 		//3. 세션통해 xml까지
 		List<GuestBookVo> guestList = sqlSession.selectList("guestBook.guestList");
 		
-		System.out.println(guestList);
+		//System.out.println(guestList);
 		
 		return guestList;
 	}
@@ -53,4 +53,24 @@ public class GuestBookDao {
 		
 		return count;
 	}
+	
+	
+	//방명록 글 저장  -  ajax
+	public int insertGuestbookKey(GuestBookVo guestBookVo) {
+		System.out.println("[guestbookDao.insertGuestbookKey]");
+	    
+		System.out.println(guestBookVo);
+		
+	      return sqlSession.insert("guestBook.insertGuestbookKey", guestBookVo);
+	}
+	
+	
+	//방명록 글 가져오기  - ajax
+	public GuestBookVo selectGuestbook(int no) {
+		System.out.println("[guestbookDao.selectGuestbook]");
+		
+		return sqlSession.selectOne("guestBook.selectGuestbook", no);
+	}
+	
+	
 }
