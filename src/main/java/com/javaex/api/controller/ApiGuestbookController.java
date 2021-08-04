@@ -13,6 +13,7 @@ import com.javaex.service.GuestBookService;
 import com.javaex.vo.GuestBookVo;
 
 @Controller
+@RequestMapping(value = "/api/guestbook/")
 public class ApiGuestbookController {
 	
 	@Autowired
@@ -20,7 +21,7 @@ public class ApiGuestbookController {
 
 	//ajax 리스트 가져오기
 	@ResponseBody
-	@RequestMapping(value = "/api/guestbook/list", method = {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "list", method = {RequestMethod.GET, RequestMethod.POST})
 	public List<GuestBookVo> list() {
 		System.out.println("ApiGuestbookController.list()");
 		
@@ -32,8 +33,8 @@ public class ApiGuestbookController {
 	
 	
 	//ajax 방명록 저장
-	@ResponseBody
-	@RequestMapping(value = "/api/guestbook/write", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody				//기존 포워드 방식으로 하지말고 밑에 resultVo같은 데이터를 리스폰스바디에 보내주라는 뜻이다.
+	@RequestMapping(value = "write", method = {RequestMethod.GET, RequestMethod.POST})
 	public GuestBookVo write(@ModelAttribute GuestBookVo guestBookVo) {
 		System.out.println("ApiGuestbookController.write()");
 		
@@ -43,6 +44,21 @@ public class ApiGuestbookController {
 		
 		return resultVo;	//제이슨으로 넘겨주는 방법임	리스폰스body에 넣어서 보내라
 	}
+	
+	
+	//ajax 방명록 삭제
+	@ResponseBody
+	@RequestMapping(value = "remove", method = {RequestMethod.GET, RequestMethod.POST})
+	public int remove(@ModelAttribute GuestBookVo guestBookVo) {
+		System.out.println("ApiGuestbookController.remove()");
+		
+		int count = guestBookService.guestDelete(guestBookVo);
+		System.out.println(count);
+		
+		return count;
+	}
+	
+	
 	
 	
 }
