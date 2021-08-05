@@ -82,4 +82,13 @@ public class GuestbookController {
 		
 		return "guestbook/ajaxList";
 	}
+	
+	
+	// ajax 방명록 메인페이지  -- 연습용
+	@RequestMapping(value = "guestbook/ajaxPractice", method = { RequestMethod.GET, RequestMethod.POST })
+	public String ajaxPractice() {
+		System.out.println("gBookController.ajaxPractice()");
+
+		return "guestbook/ajaxPractice";
+	}
 }
