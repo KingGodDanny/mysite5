@@ -21,7 +21,7 @@
 
 		<div id="container" class="clearfix">
 			<!-- 게시판 aside -->
-			<c:import url="/WEB-INF/views/includes/asideBoard.jsp"></c:import>
+			<c:import url="/WEB-INF/views/includes/asideGallery.jsp"></c:import>
 			<!-- //게시판 aside -->
 			
 			

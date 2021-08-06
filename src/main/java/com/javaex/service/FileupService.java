@@ -23,10 +23,6 @@ public class FileupService {
 		String saveDir = "C:\\javaStudy\\upload\\";
 		
 		
-		//파일 서버하드디스크에 저장
-		//파일정보를 db에 저장
-		
-		
 		//원파일이름
 		String orgName = file.getOriginalFilename();
 		System.out.println(orgName);
