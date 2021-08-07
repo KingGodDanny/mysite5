@@ -76,7 +76,8 @@
 									</td>
 								</tr>
 							</tbody>
-
+								<button id="btnshow" type="button">보이기</button>
+                     			<button id="btnhide" type="button">숨기기</button>
 						</table>
 
 					</form>
@@ -346,6 +347,22 @@ function render(guestBookVo, type) {
 	
 	
 }
+
+
+/* 보이기 숨기기 예제 */
+$("#btnhide").on("click", function() {
+	console.log("숨기기버튼 클릭");
+	
+	$("btnSubmit").hide();
+	
+});
+
+$("#btnshow").on("click", function() {
+	console.log("보이기버튼 클릭")
+	
+	$("btnSubmit").show();
+	
+});
 
 
 </script>

@@ -1,6 +1,8 @@
 package com.javaex.dao;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,38 @@ public class BoardDao {
 	@Autowired
 	private SqlSession sqlSession; 
 	
-	//3. 서비스구간에서 토스받아 넘어온 업데이트와 1개정보셀렉트를 각각 다른
+	//	전체 게시물 갯수 구하기
+	public int selectTotalCnt(String keyword) {
+		System.out.println("BoardDao.selectTotalCnt()");
+		
+		
+		return sqlSession.selectOne("board.selectTotalCnt", keyword);
+	}
+	
+	
+	//	게시판 페이징 연습용 리스트
+	public List<BoardVo> selectList2(int startRnum, int endRnum, String keyword) {
+		System.out.println("BoardDao.selectList2()");
+		System.out.println(startRnum);
+		System.out.println(endRnum);
+		
+		Map<String, Object> pMap = new HashMap<String, Object>();
+		pMap.put("startRnum", startRnum);
+		pMap.put("endRnum", endRnum);
+		pMap.put("keyword", keyword);
+		System.out.println("다오의맵이다 :" + pMap);
+		
+		
+//		List<BoardVo> boardList = sqlSession.selectList("board.selectList2");
+//		System.out.println(boardList);
+		
+		return sqlSession.selectList("board.selectList2" , pMap);
+	}
+	
+	
+	
+	
+	//	3. 서비스구간에서 토스받아 넘어온 업데이트와 1개정보셀렉트를 각각 다른
 	//   메소드로 xml에 요청해야한다. public 다음에 써야하는 자료형과 리턴값 공부하자
 	
 	//조회수 올리기
@@ -29,7 +62,7 @@ public class BoardDao {
 	}
 	
 	
-	//게시판1개 정보 가져오기
+	//	게시판1개 정보 가져오기
 	public BoardVo selectBoard(int no) {
 		System.out.println("BoardDao.selectBoard()");
 		System.out.println(no);
@@ -42,7 +75,7 @@ public class BoardDao {
 	}
 	
 	
-	//리스트 가져오기
+	//	리스트 가져오기
 	public List<BoardVo> boardList(String keyword) {
 		System.out.println("BoardDao.List<BoardVo>");
 		System.out.println(keyword);
