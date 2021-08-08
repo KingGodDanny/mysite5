@@ -41,4 +41,30 @@ public class GalleryDao {
 		return galleryList;
 	}
 	
+	
+	//하나의 갤러리 이미지 가져오기
+	public GalleryVo oneGallery(int no) {
+		System.out.println("GalleryDao.oneGallery()");
+		System.out.println("원갤러리 다오 no: " + no);
+		
+		GalleryVo galleryVo = sqlSession.selectOne("gallery.oneGallery", no);
+		
+		System.out.println("xml갔다온 보다: " + galleryVo);
+		
+		return galleryVo;
+	}
+	
+	
+	//한개의 이미지 삭제
+	public int imgDelete(int no) {
+		System.out.println("GalleryDao.imgDelete()");
+		
+		int count = sqlSession.delete("gallery.imgDelete", no);
+		
+		return count;
+		
+	}
+	
+	
+	
 }

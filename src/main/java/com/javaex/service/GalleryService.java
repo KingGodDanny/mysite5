@@ -26,7 +26,6 @@ public class GalleryService {
 		
 		//파일 업로드 처리
 		String saveDir = "C:\\javaStudy\\upload\\";
-		galleryVo.setContent(saveDir);
 		
 		//원래 파일 이름
 		String orgName = file.getOriginalFilename();
@@ -80,5 +79,28 @@ public class GalleryService {
 		
 		return galleryList;
 	}
+	
+	
+	//하나의 갤러리 이미지 가져오기
+	public GalleryVo oneGallery(int no) {
+		System.out.println("GalleryService.oneGallery");
+		
+		//다오로 전송
+		GalleryVo galleryVo = galleryDao.oneGallery(no);
+		
+		return galleryVo;
+	}
+	
+	
+	//한개 갤러리 삭제
+	public int imgDelete(int no) {
+		System.out.println("GalleryService.imgDelete");
+		System.out.println("삭제서비스 no: " + no);
+		
+		int count = galleryDao.imgDelete(no);
+		
+		return count;
+	}
+	
 	
 }

@@ -35,4 +35,32 @@
 		]]>
 	</select>
 
+
+	<!-- 갤러리 하나 가져오기 -->
+	<select id="oneGallery" parameterType="int" resultType="com.javaex.vo.GalleryVo">
+		<![CDATA[
+			select g.no,
+				   g.user_no,
+				   g.content,
+				   g.filePath,
+				   g.orgName,
+				   g.saveName,
+				   g.fileSize,
+				   u.name
+			from gallery g, users u
+			where g.user_no = u.no
+			and g.no = #{no}			
+		]]>
+	</select>
+	
+	
+	<!-- 갤러리 한개 삭제하기 -->
+	<delete id="imgDelete" parameterType="int">
+		<![CDATA[
+			delete from gallery
+			where no = #{no}
+		]]>
+	</delete>
+	
+		
 </mapper>

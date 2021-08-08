@@ -61,8 +61,8 @@
 								<!-- 이미지반복영역 -->
 							<c:forEach items="${galleryList}" var="galleryVo">
 								<li>
-									<div class="view">
-										<img class="imgItem" src="${pageContext.request.contextPath }/upload/${galleryVo.saveName } ">
+									<div class="view" id="t-${galleryVo.no }" >
+										<img data-no= "${galleryVo.no }" class="imgItem" src="${pageContext.request.contextPath }/upload/${galleryVo.saveName } ">
 										<div class="imgWriter">
 											작성자: <strong> ${galleryVo.name } </strong>
 										</div>
@@ -182,8 +182,103 @@
 	});
 	
 
+	//리스트에서 한개의 이미지를 클릭했을때
+	$(".imgItem").on("click", function() {
+		console.log("한개의 이미지 모달창 클릭버튼")
+		
+		//no 입력하기
+		var no = $(this).data("no");
+		console.log("제발: " +no);
+		
+		
+// 		ajax 요청하기(no를 전달해야한다.)
+		$.ajax({
+		
+		url : "${pageContext.request.contextPath }/api/gallery/imgOne",		
+		type : "post",
+// 		contentType : "application/json",
+		data : "no=" + no ,
+
+		dataType : "json",
+		success : function(galleryVo){
+			/*성공시 처리해야될 코드 작성*/
+			console.log(galleryVo)
+			
+			$("#btnDel").val(no);
+			
+			$("#viewModelImg").attr("src" , "${pageContext.request.contextPath }/upload/" + galleryVo.saveName); //경로를 통한 사진을 출력하기위해 속성의 위치와 속성값추가!
+			$("#viewModelContent").text(galleryVo.content);	//글을 넣기위해서 텍스트로 콘텐츠 추가!
+			
+			//모달창 보이기
+			$("#viewModal").modal();
+			
+			var userno = galleryVo.user_no;
+			
+			//삭제버튼을 show 와 hide
+			if(userno != "${sessionScope.authUser.no}" ) {
+				$("#btnDel").hide();
+			} else {
+				$("#btnDel").show();
+				
+				
+				
+				
+			}
+			
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	});
+
+		
+	});
 
 
+	//모달창에서 삭제를 클릭했을때
+	$("#btnDel").on("click", function() {
+		console.log("로그인한사람만 삭제버튼클릭가능")
+		
+		//no 입력하기
+		var no = $("#btnDel").val();
+		console.log("삭제no: " + no);
+		
+		
+		//삭제를 위한 요청
+		$.ajax({
+			
+			url : "${pageContext.request.contextPath }/api/gallery/imgDelete",		
+			type : "post",
+//				contentType : "application/json",
+			data : {no: no},
+
+			dataType : "json",
+			success : function(count){
+				/*성공시 처리해야될 코드 작성*/
+				
+				if(count === 1) {
+					
+					//모달창 닫기
+					$("#viewModal").modal("hide");
+					
+					//view 구간 이미지하나 삭제
+					$("#t-" + no).remove();
+					
+				} else {
+					
+					//모달창 닫기
+					$("#viewModal").modal("hide");
+				}
+				
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+	})	
 
 
 
