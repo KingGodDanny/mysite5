@@ -68,4 +68,13 @@ public class UserDao {
 		return count;
 	}
 	
+	
+	//id를 통해 회원정보 가져오기
+	public UserVo selectUser(String id) {
+		System.out.println("[UserDao.selectUser()]");
+		System.out.println(id);
+		
+		
+		return sqlSession.selectOne("user.selectUserById" ,id);
+	}
 }

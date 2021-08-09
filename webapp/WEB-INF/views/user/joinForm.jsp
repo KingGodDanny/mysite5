@@ -9,6 +9,8 @@
 <link href="${pageContext.request.contextPath }/assets/css/mysite.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
 
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.12.4.js"></script>
+
 </head>
 
 <body>
@@ -45,14 +47,16 @@
 				<!-- //content-head -->
 	
 				<div id="user">
-					<div id="joinForm">
-						<form action="${pageContext.request.contextPath }/user/join" method="get">
+					<div>
+						<form id="joinForm" action="${pageContext.request.contextPath }/user/join" method="get">
 					
 							<!-- 아이디 -->
 							<div class="form-group">
 								<label class="form-text" for="input-uid">아이디</label> 
 								<input type="text" id="input-uid" name="id" value="" placeholder="아이디를 입력하세요">
-								<button type="button" id="">중복체크</button>
+								<button type="button" id="btnIdCheck">중복체크</button>
+								<p id="idCheckMsg"></p>
+								
 							</div>
 	
 							<!-- 비밀번호 -->
@@ -113,5 +117,131 @@
 	<!-- //wrap -->
 
 </body>
+
+
+<script type="text/javascript">
+
+	//데이터를 json 형식 보내기
+	//form 사용 X ---> form 처럼 사용하기
+	//parameter X ---> jason으로 데이터를 보낸다
+	
+	$("#btn-submit").on("click", function() {
+		event.preventDefault();	//회원가입눌렀을때 화면이 넘어가는걸 방지!
+		console.log("jason방식으로 데이터 보내기");
+		
+		//데이터 모으기
+		var userVo = {
+				id: $("#input-uid").val(),
+				password: $("#input-pass").val(),
+				name: $("#input-name").val(),
+				gender: $("[name=gender]").val()
+		};
+// 		userVo.gender = $("[name=gender]").val();	//userVo에 gender를 추가하고 =값을 담아주는 문법!
+		
+		console.log(userVo);
+		console.log(JSON.stringify(userVo));
+		
+		
+		//데이터 ajax방식으로 서버에 전송	
+		$.ajax({
+			url : "${pageContext.request.contextPath }/user/join2" ,
+			type : "post",
+	 		contentType : "application/json",	//요청이고 제이슨형식으로 컨트롤러로 요청하겠다.
+			data : JSON.stringify(userVo),		//js 객체를 json형식(문자열)으로 변경해야함 -->변경하는 문법
+
+
+			dataType : "json",
+			success : function(count){
+				/*성공시 처리해야될 코드 작성*/
+				console.log(count);
+				
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		});
+		
+		
+	});
+
+
+
+	/*
+	//Form 전송 버튼 클릭했을때
+	$("#joinForm").on("submit", function() {	//이건 form을 submit으로 쓰겠다는 것!
+		console.log("form 전송 버튼 클릭했을때");
+		
+		
+		//패스워드 8글자 이상 체크
+		var password = $("#input-pass").val();
+		if(password.length < 8) {
+			alert("패스워드를 8글자 이상 입력해 주세요");
+			return false;
+		}
+		
+		//이름체크
+		var name = $("#input-name").val();
+		if(name.length < 1) {
+			alert("이름을 입력해 주세요");
+			return false;
+		}
+		
+		
+		//약관동의
+		var agree = $("#chk-agree").is(":checked");
+		if(agree == false) {
+			alert("약관에 동의해 주세요.")
+			return false;
+		}
+		
+		return false;
+	});
+	*/
+
+
+	//회원가입시 중복체크 이벤트
+	$("#btnIdCheck").on("click", function(){
+	    console.log("중복체크 클릭")
+	    
+	    var id = $("#input-uid").val();
+	    console.log(id)
+	    
+	    $.ajax({
+	       
+	       url : "${pageContext.request.contextPath }/user/idCheck",      
+	       type : "post",
+	       //contentType : "application/json",   //json방식으로 보내겠다!
+	       data : {id :id},
+	       
+	       dataType : "json",
+	       success : function(state){
+	          /*성공시 처리해야될 코드 작성*/
+	          console.log(state)
+	          
+	          if(state == true) {
+	          	  $("#idCheckMsg").html("사용가능한 아이디입니다.")
+	          } else if(state == false) {
+	        	  $("#idCheckMsg").html("이미 사용중인 아이디입니다.")
+	          } else {
+	        	  $("#idCheckMsg").html("고객센터에 문의 바랍니다.")
+	          }
+	          
+	       },
+	       error : function(XHR, status, error) {
+	          console.error(status + " : " + error);
+	       }
+	    }); 
+	    
+	    
+	    
+	 });
+
+
+
+</script>
+
+
+
+
 
 </html>

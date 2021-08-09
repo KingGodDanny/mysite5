@@ -62,4 +62,19 @@ public class UserService {
 		//5. 다오에서 리턴해온 count 또 리턴!
 		return count;
 	}
+	
+	
+	//회원가입폼 id 중복체크
+	public boolean getUser(String id) {
+		System.out.println("[UserService.getUser()]");
+		
+		UserVo userVo = userDao.selectUser(id);
+
+		if(userVo == null) {	//db에 없는 경우 --> 사용가능한 아이디
+			return true;
+		} else {				//db에 있는 경우 --> 이미 사용중인 아이디입니다.
+			return false;
+		}
+		
+	}
 }
