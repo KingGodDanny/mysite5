@@ -67,4 +67,15 @@ public class GuestBookService {
 		return resultVo;
 	}
 	
+	
+	//no값으로 no의 모든정보 가져오기
+	public GuestBookVo readGuest(int no) {
+		System.out.println("GuestBookService.readGuest()");
+		
+		GuestBookVo guestBookVo = guestBookDao.selectGuestbook(no);
+		
+		return guestBookVo;
+	}
+	
+	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,18 +33,36 @@ public class ApiGuestbookController {
 	}
 	
 	
-	//ajax 방명록 저장
-	@ResponseBody				//기존 포워드 방식으로 하지말고 밑에 resultVo같은 데이터를 리스폰스바디에 보내주라는 뜻이다.
-	@RequestMapping(value = "write", method = {RequestMethod.GET, RequestMethod.POST})
-	public GuestBookVo write(@ModelAttribute GuestBookVo guestBookVo) {
+	
+	// ajax 방명록 저장 x 안드로이드
+	@ResponseBody 		// 기존 포워드 방식으로 하지말고 밑에 resultVo같은 데이터를 리스폰스바디에 보내주라는 뜻이다.
+	@RequestMapping(value = "write2", method = { RequestMethod.GET, RequestMethod.POST })
+	public GuestBookVo write2(@RequestBody GuestBookVo guestBookVo) {
 		System.out.println("ApiGuestbookController.write()");
+		System.out.println(guestBookVo);
 		
+
 		GuestBookVo resultVo = guestBookService.writeResultVo(guestBookVo);
-		
+
 		System.out.println("컨트롤러제이슨: " + resultVo);
-		
-		return resultVo;	//제이슨으로 넘겨주는 방법임	리스폰스body에 넣어서 보내라
+
+		return resultVo; // 제이슨으로 넘겨주는 방법임 리스폰스body에 넣어서 보내라
 	}
+	
+	
+	
+//	//ajax 방명록 저장
+//	@ResponseBody				//기존 포워드 방식으로 하지말고 밑에 resultVo같은 데이터를 리스폰스바디에 보내주라는 뜻이다.
+//	@RequestMapping(value = "write", method = {RequestMethod.GET, RequestMethod.POST})
+//	public GuestBookVo write(@ModelAttribute GuestBookVo guestBookVo) {
+//		System.out.println("ApiGuestbookController.write()");
+//		
+//		GuestBookVo resultVo = guestBookService.writeResultVo(guestBookVo);
+//		
+//		System.out.println("컨트롤러제이슨: " + resultVo);
+//		
+//		return resultVo;	//제이슨으로 넘겨주는 방법임	리스폰스body에 넣어서 보내라
+//	}
 	
 	
 	//ajax 방명록 삭제
@@ -58,6 +77,20 @@ public class ApiGuestbookController {
 		return count;
 	}
 	
+	
+	//안드로이드 방명록 글 1개 가져오기
+	@ResponseBody
+	@RequestMapping(value = "/read", method = {RequestMethod.GET, RequestMethod.POST})
+	public GuestBookVo read(@RequestBody GuestBookVo guestBookVo) {
+		System.out.println("ApiGuestbookController.read()");
+		System.out.println(guestBookVo);
+		
+		
+		GuestBookVo resultVo = guestBookService.readGuest(guestBookVo.getNo());
+		System.out.println(resultVo);
+		
+		return resultVo;
+	}
 	
 	
 	
